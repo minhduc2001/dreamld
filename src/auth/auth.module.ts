@@ -12,10 +12,12 @@ import { UserModule } from '@/user/user.module';
 
 // BASE
 import { config } from '@/config';
+import { ManagerDeviceModule } from '@/manager-device/manager-device.module';
 
 @Module({
   imports: [
     UserModule,
+    ManagerDeviceModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: config.JWT_SECRET,

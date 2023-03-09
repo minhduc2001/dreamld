@@ -1,29 +1,59 @@
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsObject,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { Transform } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
+
+export class DeviceInfoDto {
+  @ApiProperty({ required: true, example: '982956652' })
+  @IsNotEmpty()
+  @IsString()
+  @Transform(({ value }) => value && value.trim())
+  deviceId: string;
+
+  @ApiProperty({ required: false, example: '' })
+  @IsOptional()
+  @IsString()
+  deviceType: string;
+
+  @ApiProperty({ required: false, example: '' })
+  @IsOptional()
+  @IsString()
+  osVersion: string;
+
+  @ApiProperty({ required: false, example: 'Android' })
+  @IsOptional()
+  @IsString()
+  deviceName: string;
+}
 export class LoginDto {
-  @ApiProperty()
-  @IsNotEmpty({ message: 'username không được để trống' })
+  @ApiProperty({ required: true, example: '0768368218' })
+  @IsNotEmpty({ message: 'số điện thoại không được để trống' })
   @Transform(({ value }) => value && value.trim())
   @IsString()
-  // @MinLength(1, { message: 'username không ít hơn 1 ký tự' })
-  // @MaxLength(30, { message: 'username không quá 30 ký tự' })
-  username: string;
+  phone: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: true, example: '123123' })
   @IsNotEmpty({ message: 'USER011101' })
   @IsString()
-  // @MinLength(5, { message: 'password không ít hơn 5 ký tự' })
-  // @MaxLength(30, { message: 'password không quá 30 ký tự' })
   password: string;
+
+  @ApiProperty()
+  @IsObject()
+  deviceInfo: DeviceInfoDto;
 }
 
-export class RegisterDto extends LoginDto {
-  @ApiProperty()
-  @IsNotEmpty({ message: 'email không được để trống' })
+export class RegisterDto extends OmitType(LoginDto, ['deviceInfo']) {}
+
+export class CheckPhoneDto {
+  @ApiProperty({ required: true, example: '0768368218' })
+  @IsNotEmpty({ message: 'số điện thoại không được để trống' })
   @Transform(({ value }) => value && value.trim())
   @IsString()
-  // @MinLength(1, { message: 'email không ít hơn 1 ký tự' })
-  // @MaxLength(30, { message: 'email không quá 30 ký tự' })
-  email: string;
+  phone: string;
 }

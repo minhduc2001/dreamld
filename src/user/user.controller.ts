@@ -24,7 +24,7 @@ import { PERMISSIONS } from '@shared/constants/permission.constant';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { uploadUrl } from '@base/helper/url.helper';
 
-@Controller('user')
+@Controller('users')
 @ApiBearerAuth()
 @ApiTags('User')
 @UseGuards(JwtAuthGuard)
@@ -32,7 +32,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @ApiConsumes()
-  @Public()
+  // @Public()
   @Get()
   // @Roles(ERole.Admin)
   // @Permissions(PERMISSIONS.DELETE_USER)

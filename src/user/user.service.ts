@@ -39,8 +39,11 @@ export class UserService extends BaseService<User> {
       .getOne();
   }
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.repository.findOne({ where: { username: username } });
+  async findOneUser(userId: number): Promise<User | undefined> {
+    const user = this.repository.findOne({ where: { id: userId } });
+    if (!user)
+      throw new exc.BadRequest({ message: 'người dùng không tồn tại' });
+    return user;
   }
 
   async getUserById(id: number): Promise<User | undefined> {
@@ -65,4 +68,24 @@ export class UserService extends BaseService<User> {
   async uploadAvatar(dto: UploadAvatarDto) {
     console.log(dto);
   }
+
+  async checkPhoneNumberExists(phone: string) {
+    try {
+      const isExist = await this.getUserByUniqueKey({ phone: phone });
+      if (isExist)
+        throw new exc.BadRequest({
+          message: 'Số điện thoại đã tồn tại',
+          errorCode: 'PHONE_EXIST',
+        });
+      return;
+    } catch (e) {
+      // this.logger.warn(e);
+      throw new exc.BadRequest({
+        message: e.message,
+        errorCode: e.response.errorCode,
+      });
+    }
+  }
+
+  async countDeviceLogged(userId) {}
 }
