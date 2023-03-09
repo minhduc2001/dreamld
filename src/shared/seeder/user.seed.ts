@@ -5,14 +5,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { EState } from '@shared/enum/common.enum';
 import { User } from '@/user/entities/user.entity';
 import { Permission } from '@/role/entities/permission.entity';
+import { ERole } from '@/role/enum/roles.enum';
 
 const permissionGroup = [1];
 const data = [
   {
     username: 'admin',
     email: 'admin@admin.com',
+    phone: '0123456789',
     password: '$2b$10$VU9fAWrF61xLIUkJKf5vBuBCh4RzdCFNekqLppKhk01/WwTx3BBFK',
     state: EState.Active,
+    role: ERole.Admin,
   },
 ];
 @Injectable()

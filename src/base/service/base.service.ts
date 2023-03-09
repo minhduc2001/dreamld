@@ -1,5 +1,11 @@
 import { paginate, PaginateConfig, PaginateQuery } from 'nestjs-paginate';
-import { FindManyOptions, Repository, SelectQueryBuilder } from 'typeorm';
+import {
+  FindManyOptions,
+  FindOneOptions,
+  Repository,
+  SelectQueryBuilder,
+} from 'typeorm';
+import { EState } from '@shared/enum/common.enum';
 
 export abstract class BaseService<T> {
   protected constructor(protected readonly repository: Repository<T>) {}
@@ -23,9 +29,9 @@ export abstract class BaseService<T> {
     return await this.repository.findAndCount(options);
   }
 
-  //   async findById(id: number): Promise<T> {
-  //     return await this.repository.findOne({ where: { id: id } });
-  //   }
+  async findOne(options?: FindOneOptions<T>): Promise<T> {
+    return await this.repository.findOne(options);
+  }
 
   async create(entity: T): Promise<T> {
     return await this.repository.save(entity);
@@ -37,5 +43,9 @@ export abstract class BaseService<T> {
 
   async delete(id: number): Promise<void> {
     await this.repository.delete(id);
+  }
+
+  async softDelete(id: number): Promise<void> {
+    await this.repository.softDelete(id);
   }
 }

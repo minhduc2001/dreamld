@@ -14,8 +14,9 @@ import { RoleModule } from '@/role/role.module';
 
 // SHARED
 import { SeedersModule } from '@shared/seeder/seeder.module';
+import { ManagerDeviceModule } from '@/manager-device/manager-device.module';
 
-const appModule = [AuthModule, UserModule, RoleModule, MailerModule];
+const appModule = [AuthModule, UserModule, RoleModule, ManagerDeviceModule];
 const baseModule = [LoggerModule];
 
 @Module({

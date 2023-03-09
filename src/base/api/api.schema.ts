@@ -1,6 +1,6 @@
 export const defaultPayload = {
   success: true,
-  errorCode: '000000',
+  errorCode: '200',
   statusCode: 200,
   message: '',
   data: null,

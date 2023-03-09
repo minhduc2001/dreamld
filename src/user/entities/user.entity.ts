@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
 import { ERole } from '@/role/enum/roles.enum';
@@ -6,11 +6,16 @@ import { AbstractEntity } from '@/base/service/abstract-entity.service';
 import { Permission } from '@/role/entities/permission.entity';
 import { JoinTable } from 'typeorm';
 import { EState } from '@shared/enum/common.enum';
+import { Device } from '@/manager-device/entities/device.entity';
+import { LoggedDevice } from '@/manager-device/entities/logged-device.entity';
 
 @Entity()
 export class User extends AbstractEntity {
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: true })
   username: string;
+
+  @Column({ nullable: false, unique: true })
+  phone: string;
 
   @Exclude({ toPlainOnly: true })
   @Column()
@@ -31,6 +36,10 @@ export class User extends AbstractEntity {
   @ManyToMany(() => Permission, (permission) => permission)
   @JoinTable()
   permissions: Permission[];
+
+  @OneToMany(() => LoggedDevice, (loggedDevice) => loggedDevice.user)
+  @JoinTable()
+  loggedDevice: LoggedDevice[];
 
   @Column({ type: 'enum', enum: EState, default: EState.Active })
   state: EState;

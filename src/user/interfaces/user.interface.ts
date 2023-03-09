@@ -1,9 +1,9 @@
 export interface IUserGetByUniqueKey {
-  username?: string;
+  phone?: string;
   email?: string;
 }
 
 export interface ICreateUser {
-  username: string;
+  phone: string;
   password: string;
 }
