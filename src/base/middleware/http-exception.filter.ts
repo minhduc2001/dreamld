@@ -34,6 +34,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
             : { excResponse },
         data: typeof excResponse === 'object' ? excResponse['data'] : null,
       }).getResponse();
+    } else {
+      excResponse['statusCode'] = status;
     }
 
     this.logger.error(excResponse?.['message']);

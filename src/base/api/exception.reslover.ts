@@ -120,6 +120,12 @@ export class BadRequest<TData> extends BaseException<TData> {
   }
 }
 
+export class BadException<TData> extends BaseException<TData> {
+  constructor(payload: Payload<TData>) {
+    super(payload, HttpStatus.ACCEPTED);
+  }
+}
+
 export class Unauthorized<TData> extends BaseException<TData> {
   constructor(payload: Payload<TData>) {
     super(payload, HttpStatus.UNAUTHORIZED);

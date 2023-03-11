@@ -24,8 +24,8 @@ export class LoggedDeviceController {
   logger = this.loggerService.getLogger(LoggedDeviceController.name);
 
   @Get()
-  async listDeviceLoggedByUser(@Query() query: ListDeviceLoggedDto) {
-    return this.service.listDeviceLoggedByUser(query);
+  async listDeviceLoggedByUser(@GetUser() user: User) {
+    return this.service.listDeviceLoggedByUser(user);
   }
 
   @Post('logout-device')
