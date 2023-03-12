@@ -33,6 +33,12 @@ const appModule = [
   TaleModule,
   GenreModule,
   AudioBookModule,
+  HistoryModule,
+  CommentModule,
+  PaymentModule,
+  FavoriteModule,
+  LibraryModule,
+  AuthorModule,
 ];
 const baseModule = [LoggerModule];
 
@@ -42,12 +48,6 @@ const baseModule = [LoggerModule];
     ...appModule,
     TypeOrmModule.forRoot(dbConfig),
     SeedersModule,
-    HistoryModule,
-    CommentModule,
-    PaymentModule,
-    FavoriteModule,
-    LibraryModule,
-    AuthorModule,
   ],
   controllers: [],
   providers: [],

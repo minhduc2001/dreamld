@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 import { AbstractEntity } from '@base/service/abstract-entity.service';
 import { Genre } from '@/genre/genre.entity';
 import { Author } from '@/author/author.entity';
@@ -6,7 +6,10 @@ import { Author } from '@/author/author.entity';
 @Entity()
 export class AudioBook extends AbstractEntity {
   @Column()
-  name: string;
+  title: string;
+
+  @Column({ nullable: true, default: null })
+  publicationDate: Date;
 
   @Column()
   views: number;
@@ -14,9 +17,14 @@ export class AudioBook extends AbstractEntity {
   @Column()
   likes: string;
 
+  @Column({ type: 'boolean', default: false })
+  accomplished: boolean;
+
   @ManyToMany(() => Genre, (genre) => genre.audioBook)
+  @JoinTable()
   genre: Genre[];
 
   @ManyToMany(() => Author, (author) => author.audioBook)
+  @JoinTable()
   author: Author[];
 }
