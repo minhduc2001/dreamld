@@ -11,6 +11,7 @@ import { Genre } from '@/genre/genre.entity';
 import { Author } from '@/author/author.entity';
 import { AudioBookEp } from '@/audio-book/entities/audio-book-ep.entity';
 import { Comment } from '@/comment/comment.entity';
+import { History } from '@/history/entities/history.entity';
 
 @Entity()
 export class AudioBook extends AbstractEntity {
@@ -49,4 +50,8 @@ export class AudioBook extends AbstractEntity {
 
   @OneToMany(() => Comment, (comment) => comment.audioBook)
   comment: Comment;
+
+  @OneToMany(() => History, (history) => history.user)
+  @JoinColumn()
+  history: History[];
 }

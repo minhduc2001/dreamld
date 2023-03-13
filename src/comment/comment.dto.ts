@@ -12,8 +12,8 @@ import { User } from '@/user/entities/user.entity';
 import { Transform } from 'class-transformer';
 
 export class ListCommentDto extends ListDto {
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiHideProperty()
+  @IsOptional()
   @Transform(({ value }) => value && +value)
   @IsPositive()
   audioBookId: number;

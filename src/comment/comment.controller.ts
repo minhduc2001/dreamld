@@ -26,10 +26,13 @@ export class CommentController {
   ) {}
   logger = this.loggerService.getLogger(CommentController.name);
 
-  @ApiOperation({ summary: 'Liệt kê comment' })
-  @Get(':audioBookId')
-  async listComment(@Query() query: ListCommentDto) {
-    return this.service.listComment(query);
+  @ApiOperation({ summary: 'Liệt kê comment theo audio book' })
+  @Get(':id')
+  async listComment(
+    @Query() query: ListCommentDto,
+    @Param() param: ParamIdDto,
+  ) {
+    return this.service.listComment({ ...query, audioBookId: param.id });
   }
 
   @ApiOperation({ summary: 'Tạo comment' })

@@ -2,6 +2,7 @@ import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { AbstractEntity } from '@base/service/abstract-entity.service';
 import { Comment } from '@/comment/comment.entity';
 import { AudioBook } from '@/audio-book/entities/audio-book.entity';
+import { EpHistory } from '@/history/entities/ep-history.entity';
 
 @Entity()
 export class AudioBookEp extends AbstractEntity {
@@ -31,4 +32,7 @@ export class AudioBookEp extends AbstractEntity {
 
   @OneToMany(() => Comment, (comment) => comment.audioBookEp)
   comment: Comment;
+
+  @OneToMany(() => EpHistory, (epHistory) => epHistory.audioBookEp)
+  epHistory: EpHistory[];
 }
