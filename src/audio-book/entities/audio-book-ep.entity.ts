@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { AbstractEntity } from '@base/service/abstract-entity.service';
 import { Comment } from '@/comment/comment.entity';
+import { AudioBook } from '@/audio-book/entities/audio-book.entity';
 
 @Entity()
 export class AudioBookEp extends AbstractEntity {
@@ -8,10 +9,25 @@ export class AudioBookEp extends AbstractEntity {
   title: string;
 
   @Column({ nullable: true })
+  description: string;
+
+  @Column({ nullable: true })
+  duration: string;
+
+  @Column({ nullable: true })
   publicationDate: Date;
+
+  @Column('text', { array: true, default: [], nullable: true })
+  images: string[];
+
+  @Column({ nullable: true, default: '' })
+  url: string;
 
   @Column({ nullable: true, default: 0 })
   views: number;
+
+  @ManyToOne(() => AudioBook, (audioBook) => audioBook.audioBookEps)
+  audioBook: AudioBook;
 
   @OneToMany(() => Comment, (comment) => comment.audioBookEp)
   comment: Comment;

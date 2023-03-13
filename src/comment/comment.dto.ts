@@ -9,14 +9,26 @@ import {
   IsString,
 } from 'class-validator';
 import { User } from '@/user/entities/user.entity';
+import { Transform } from 'class-transformer';
 
-export class ListCommentDto extends ListDto {}
+export class ListCommentDto extends ListDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @Transform(({ value }) => value && +value)
+  @IsPositive()
+  audioBookId: number;
+}
 
 export class CreateCommentDto {
   @ApiProperty({ description: 'nội dung comment' })
   @IsNotEmpty()
   @IsString()
   content: string;
+
+  @ApiProperty({ description: 'id audio book' })
+  @IsNotEmpty()
+  @IsPositive()
+  audioBook: number;
 
   @ApiProperty({ description: 'id audio book ep' })
   @IsNotEmpty()

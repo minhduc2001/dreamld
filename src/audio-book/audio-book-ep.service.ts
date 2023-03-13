@@ -23,15 +23,21 @@ export class AudioBookEpService extends BaseService<AudioBookEp> {
   }
   logger = this.loggerService.getLogger(AudioBookEpService.name);
 
-  async listAudioEpBook(query: ListAudioBookEpDto) {
+  async listAudioBookEp(query: ListAudioBookEpDto) {
     const config: PaginateConfig<AudioBookEp> = {
       sortableColumns: ['createdAt'],
+      where: [{ audioBook: { id: query.id } }],
+      relations: ['audioBook'],
     };
+
     return this.listWithPage(query, config);
   }
 
   async getAudioBookEp(id: number) {
-    const audioBook = await this.repository.findOne({ where: { id: id } });
+    const audioBook = await this.repository.findOne({
+      where: { id: id },
+      relations: { audioBook: true },
+    });
     if (!audioBook)
       throw new exc.BadException({ message: 'Audio Book không tồn tại' });
     return audioBook;

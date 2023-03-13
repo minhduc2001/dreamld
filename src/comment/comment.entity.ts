@@ -4,6 +4,7 @@ import { Genre } from '@/genre/genre.entity';
 import { Author } from '@/author/author.entity';
 import { User } from '@/user/entities/user.entity';
 import { AudioBookEp } from '@/audio-book/entities/audio-book-ep.entity';
+import { AudioBook } from '@/audio-book/entities/audio-book.entity';
 
 @Entity()
 export class Comment extends AbstractEntity {
@@ -22,6 +23,10 @@ export class Comment extends AbstractEntity {
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn()
   author: User;
+
+  @ManyToOne(() => AudioBook, (audioBook) => audioBook.comment)
+  @JoinColumn()
+  audioBook: AudioBook;
 
   @ManyToOne(() => AudioBookEp, (audioBookEp) => audioBookEp.comment)
   @JoinColumn()

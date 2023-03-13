@@ -9,6 +9,7 @@ import { LoggerService } from '@base/logger';
 import { PaginateConfig } from 'nestjs-paginate';
 import { ListAudioBookDto } from '@/audio-book/dtos/audio-book.dto';
 
+import * as exc from '@base/api/exception.reslover';
 @Injectable()
 export class AudioBookService extends BaseService<AudioBook> {
   constructor(
@@ -25,5 +26,12 @@ export class AudioBookService extends BaseService<AudioBook> {
       sortableColumns: ['updatedAt'],
     };
     return this.listWithPage(query, config);
+  }
+
+  async getAudioBook(id: number) {
+    const audioBook = await this.repository.findOne({ where: { id: id } });
+    if (!audioBook)
+      throw new exc.BadRequest({ message: 'Không tồn tại audio book' });
+    return audioBook;
   }
 }
