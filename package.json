@@ -28,6 +28,7 @@
     "\"src/**/*.ts\" \"test/**/*.ts\"": "prettier --check"
   },
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@nestjs/axios": "^2.0.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",

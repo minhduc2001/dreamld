@@ -6,12 +6,6 @@ import { LoggerService } from '@base/logger';
 import * as exc from '@base/api/exception.reslover';
 import { UserService } from '@/user/user.service';
 import { LoggedDevice } from '@/manager-device/entities/logged-device.entity';
-import { query } from 'express';
-import { PaginateConfig } from 'nestjs-paginate';
-import {
-  ListDeviceLoggedDto,
-  LogoutDeviceDto,
-} from '@/manager-device/dtos/logged-device.dto';
 import { User } from '@/user/entities/user.entity';
 import { Device } from '@/manager-device/entities/device.entity';
 
@@ -27,12 +21,17 @@ export class LoggedDeviceService extends BaseService<LoggedDevice> {
   }
   logger = this.loggerService.getLogger(LoggedDeviceService.name);
 
-  async listDeviceLoggedByUser(query: ListDeviceLoggedDto) {
-    const config: PaginateConfig<LoggedDevice> = {
-      sortableColumns: ['device.createdAt'],
-      relations: ['device'],
-    };
-    return this.listWithPage(query, config);
+  async listDeviceLoggedByUser(user: User) {
+    const data = [];
+    const loggedDevices = await this.repository.find({
+      where: { user: { id: user.id } },
+      relations: { device: true },
+    });
+
+    for (const loggedDevice of loggedDevices) {
+      data.push(loggedDevice.device);
+    }
+    return data;
   }
 
   async loggedDevice(user: User, device: Device) {

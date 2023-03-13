@@ -16,6 +16,7 @@ import { config } from '@base/config';
 
 import { AppModule } from './app.module';
 import { SwaggerConfig } from '@base/swagger/swagger.config';
+import { UnknownExceptionFilter } from '@base/middleware/unknown-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -28,6 +29,8 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new ResponseTransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter(loggerService));
+  // app.useGlobalFilters(new UnknownExceptionFilter(loggerService));
+
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory: (validationErrors: NestValidationError[] = []) =>

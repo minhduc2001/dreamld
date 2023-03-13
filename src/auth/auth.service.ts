@@ -40,7 +40,7 @@ export class AuthService {
     try {
       await this.loggedDeviceService.loggedDevice(user, device);
     } catch (e) {
-      throw new exc.BadRequest({
+      throw new exc.BadException({
         message: e.message,
         errorCode: e.response.errorCode,
         data: { ...user, accessToken: accessToken, refreshToken: refreshToken },
