@@ -8,6 +8,7 @@ import { JoinTable } from 'typeorm';
 import { EState } from '@shared/enum/common.enum';
 import { Device } from '@/manager-device/entities/device.entity';
 import { LoggedDevice } from '@/manager-device/entities/logged-device.entity';
+import { History } from '@/history/entities/history.entity';
 
 @Entity()
 export class User extends AbstractEntity {
@@ -38,8 +39,12 @@ export class User extends AbstractEntity {
   permissions: Permission[];
 
   @OneToMany(() => LoggedDevice, (loggedDevice) => loggedDevice.user)
-  @JoinTable()
+  @JoinColumn()
   loggedDevice: LoggedDevice[];
+
+  @OneToMany(() => History, (history) => history.user)
+  @JoinColumn()
+  history: History[];
 
   @Column({ type: 'enum', enum: EState, default: EState.Active })
   state: EState;
