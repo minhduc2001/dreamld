@@ -10,7 +10,11 @@ import * as exc from '@base/api/exception.reslover';
 
 // APPS
 import { Library } from '@/library/entities/library.entity';
-import { CreateLibraryDto, ListLibraryDto } from '@/library/library.dto';
+import {
+  CreateLibraryDto,
+  ListLibraryDto,
+  UpdateLibrary,
+} from '@/library/library.dto';
 
 @Injectable()
 export class LibraryService extends BaseService<Library> {
@@ -53,5 +57,15 @@ export class LibraryService extends BaseService<Library> {
     const library = await this.repository.findOne({ where: { id: id } });
     if (!library) throw new exc.NotFound({ message: 'Không tồn tại thư viện' });
     return library;
+  }
+
+  async deleteLibrary(id: number) {
+    return this.repository.delete(id);
+  }
+
+  async updateLibrary(dto: UpdateLibrary) {
+    await this.getLibrary(dto.id);
+    await this.repository.update(dto.id, { name: dto.name });
+    return true;
   }
 }
