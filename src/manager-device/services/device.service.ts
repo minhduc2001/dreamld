@@ -11,7 +11,7 @@ import * as exc from '@base/api/exception.reslover';
 import { Device } from '@/manager-device/entities/device.entity';
 import { AddDeviceDto } from '@/manager-device/dtos/device.dto';
 import { UserService } from '@/user/user.service';
-import { LoggedDeviceService } from '@/manager-device/logged-device.service';
+import { LoggedDeviceService } from '@/manager-device/services/logged-device.service';
 
 @Injectable()
 export class DeviceService extends BaseService<Device> {

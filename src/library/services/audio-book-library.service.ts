@@ -15,7 +15,7 @@ import {
 } from '@/library/library.dto';
 import { AudioBookLibrary } from '@/library/entities/audio-book-library.entity';
 import { AudioBookService } from '@/audio-book/audio-book.service';
-import { LibraryService } from '@/library/library.service';
+import { LibraryService } from '@/library/services/library.service';
 
 @Injectable()
 export class AudioBookLibraryService extends BaseService<AudioBookLibrary> {

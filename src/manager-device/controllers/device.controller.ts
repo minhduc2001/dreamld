@@ -6,7 +6,7 @@ import { LoggerService } from '@base/logger';
 
 // APPS
 import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
-import { DeviceService } from '@/manager-device/device.service';
+import { DeviceService } from '@/manager-device/services/device.service';
 
 @Controller('device')
 @ApiTags('Device')
