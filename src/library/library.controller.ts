@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -21,6 +23,7 @@ import {
   CreateLibraryDto,
   ListAudioBookLibraryDto,
   ListLibraryDto,
+  UpdateLibrary,
 } from '@/library/library.dto';
 import { GetUser } from '@/auth/decorator/get-user.decorator';
 import { User } from '@/user/entities/user.entity';
@@ -70,5 +73,23 @@ export class LibraryController {
   @Post('create-audio-book-library')
   async createAudioBookLibrary(@Body() dto: CreateAudioBookLibraryDto) {
     return this.audioBookLibraryService.createAudioBookLibrary(dto);
+  }
+
+  @ApiOperation({ summary: 'Sửa thư viện' })
+  @Put(':id')
+  async updateLibrary(@Param() param: ParamIdDto, @Body() dto: UpdateLibrary) {
+    return this.service.updateLibrary({ ...param, ...dto });
+  }
+
+  @ApiOperation({ summary: 'Xóa thư viện' })
+  @Delete(':id')
+  async deleteLibrary(@Param() param: ParamIdDto) {
+    return this.service.deleteLibrary(param.id);
+  }
+
+  @ApiOperation({ summary: 'Xóa nội dung trong thư viện' })
+  @Delete(':id/audio-book')
+  async deleteAudioBookLibrary(@Param() param: ParamIdDto) {
+    return this.audioBookLibraryService.deleteAudioBookLibrary(param.id);
   }
 }

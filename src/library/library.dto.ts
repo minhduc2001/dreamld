@@ -5,6 +5,7 @@ import { Transform } from 'class-transformer';
 import { User } from '@/user/entities/user.entity';
 
 import { ListDto } from '@shared/dtos/common.dto';
+import { ToNumber, Trim } from '@base/decorators/common.decorator';
 
 export class ListLibraryDto extends ListDto {
   @ApiHideProperty()
@@ -46,4 +47,18 @@ export class CreateAudioBookLibraryDto {
   @IsNotEmpty()
   @IsPositive()
   audioBookId: number;
+}
+
+export class UpdateLibrary {
+  @ApiProperty()
+  @Trim()
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @ApiHideProperty()
+  @ToNumber()
+  @IsOptional()
+  @IsPositive()
+  id: number;
 }

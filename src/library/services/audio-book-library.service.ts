@@ -49,4 +49,8 @@ export class AudioBookLibraryService extends BaseService<AudioBookLibrary> {
       audioBook: audioBook,
     });
   }
+
+  async deleteAudioBookLibrary(id: number) {
+    return this.repository.delete(id);
+  }
 }
