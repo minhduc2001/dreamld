@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from '@/config';
 import { LoggerModule } from '@base/logger/logger.module';
 import { dbConfig } from '@base/db/db.config';
-import { MailerModule } from '@base/mailer/mailer.module';
 
 // APPS
 import { UserModule } from '@/user/user.module';
@@ -20,6 +19,7 @@ import { CommentModule } from '@/comment/comment.module';
 import { PaymentModule } from '@/payment/payment.module';
 import { LibraryModule } from '@/library/library.module';
 import { AuthorModule } from '@/author/author.module';
+import { MailerModule } from '@/mailer/mailer.module';
 
 // SHARED
 import { SeedersModule } from '@shared/seeder/seeder.module';
