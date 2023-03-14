@@ -31,4 +31,10 @@ export class AuthorService extends BaseService<Author> {
 
     return this.listWithPage(query, config);
   }
+
+  async getAuthor(id: number) {
+    const author = await this.repository.findOne({ where: { id: id } });
+    if (!author) throw new exc.BadRequest({ message: 'author không tồn tại' });
+    return author;
+  }
 }
