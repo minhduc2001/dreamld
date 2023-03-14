@@ -12,11 +12,11 @@ import { ResponseTransformInterceptor } from '@base/middleware/response.intercep
 import { ValidationError } from '@base/api/exception.reslover';
 import { HttpExceptionFilter } from '@base/middleware/http-exception.filter';
 import { LoggerService } from '@base/logger/logger.service';
-import { config } from '@base/config';
-
-import { AppModule } from './app.module';
+import { config } from '@/config';
 import { SwaggerConfig } from '@base/swagger/swagger.config';
 import { UnknownExceptionFilter } from '@base/middleware/unknown-exception.filter';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

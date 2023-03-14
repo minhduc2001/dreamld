@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { BaseService } from '@base/service/base.service';
-import { Device } from '@/manager-device/entities/device.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
+// BASE
+import { BaseService } from '@base/service/base.service';
 import { LoggerService } from '@base/logger';
 import * as exc from '@base/api/exception.reslover';
+
+// APPS
+import { Device } from '@/manager-device/entities/device.entity';
 import { AddDeviceDto } from '@/manager-device/dtos/device.dto';
 import { UserService } from '@/user/user.service';
 import { LoggedDeviceService } from '@/manager-device/logged-device.service';

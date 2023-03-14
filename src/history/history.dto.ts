@@ -1,8 +1,10 @@
-import { ListDto } from '@shared/dtos/common.dto';
 import { IsNotEmpty, IsOptional, IsPositive } from 'class-validator';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { User } from '@/user/entities/user.entity';
 import { Transform } from 'class-transformer';
+
+import { ListDto } from '@shared/dtos/common.dto';
+
+import { User } from '@/user/entities/user.entity';
 
 export class ListHistoryDto extends ListDto {
   @ApiHideProperty()

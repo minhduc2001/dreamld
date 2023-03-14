@@ -1,8 +1,12 @@
 import { Controller, UseGuards } from '@nestjs/common';
-import { DeviceService } from '@/manager-device/device.service';
-import { LoggerService } from '@base/logger';
 import { ApiTags } from '@nestjs/swagger';
+
+// BASE
+import { LoggerService } from '@base/logger';
+
+// APPS
 import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
+import { DeviceService } from '@/manager-device/device.service';
 
 @Controller('device')
 @ApiTags('Device')

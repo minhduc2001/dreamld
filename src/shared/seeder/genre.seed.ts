@@ -1,5 +1,4 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Author } from '@/author/author.entity';
 import { Repository } from 'typeorm';
 import { Genre } from '@/genre/genre.entity';
 

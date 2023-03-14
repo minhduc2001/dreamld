@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { BaseService } from '@base/service/base.service';
-import { History } from '@/history/entities/history.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LoggerService } from '@base/logger';
 import { PaginateConfig } from 'nestjs-paginate';
-import { ListHistoryDto, WriteHistoryDto } from '@/history/history.dto';
+
+// BASE
 import * as exc from '@base/api/exception.reslover';
+import { BaseService } from '@base/service/base.service';
+import { LoggerService } from '@base/logger';
+
+// APPS
+import { History } from '@/history/entities/history.entity';
+import { ListHistoryDto, WriteHistoryDto } from '@/history/history.dto';
 import { AudioBookService } from '@/audio-book/audio-book.service';
 
 @Injectable()

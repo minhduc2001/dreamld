@@ -8,12 +8,18 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { CommentService } from '@/comment/comment.service';
-import { LoggerService } from '@base/logger';
-import { CreateCommentDto, ListCommentDto } from '@/comment/comment.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
+
+// BASE
+import { LoggerService } from '@base/logger';
+
+// SHARED
 import { ParamIdDto } from '@shared/dtos/common.dto';
+
+// APPS
+import { CommentService } from '@/comment/comment.service';
+import { CreateCommentDto, ListCommentDto } from '@/comment/comment.dto';
+import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
 
 @Controller('comment')
 @ApiTags('Comment')

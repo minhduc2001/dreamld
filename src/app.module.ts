@@ -11,18 +11,18 @@ import { MailerModule } from '@base/mailer/mailer.module';
 import { UserModule } from '@/user/user.module';
 import { AuthModule } from '@/auth/auth.module';
 import { RoleModule } from '@/role/role.module';
+import { ManagerDeviceModule } from '@/manager-device/manager-device.module';
+import { TaleModule } from '@/tale/tale.module';
+import { GenreModule } from '@/genre/genre.module';
+import { AudioBookModule } from '@/audio-book/audio-book.module';
+import { HistoryModule } from '@/history/history.module';
+import { CommentModule } from '@/comment/comment.module';
+import { PaymentModule } from '@/payment/payment.module';
+import { LibraryModule } from '@/library/library.module';
+import { AuthorModule } from '@/author/author.module';
 
 // SHARED
 import { SeedersModule } from '@shared/seeder/seeder.module';
-import { ManagerDeviceModule } from '@/manager-device/manager-device.module';
-import { TaleModule } from './tale/tale.module';
-import { GenreModule } from './genre/genre.module';
-import { AudioBookModule } from './audio-book/audio-book.module';
-import { HistoryModule } from './history/history.module';
-import { CommentModule } from './comment/comment.module';
-import { PaymentModule } from './payment/payment.module';
-import { LibraryModule } from './library/library.module';
-import { AuthorModule } from './author/author.module';
 
 const appModule = [
   AuthModule,

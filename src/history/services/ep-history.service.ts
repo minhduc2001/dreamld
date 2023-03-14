@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { BaseService } from '@base/service/base.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PaginateConfig } from 'nestjs-paginate';
+
+// BASE
+import { BaseService } from '@base/service/base.service';
 import { LoggerService } from '@base/logger';
+
+// APPS
 import { EpHistory } from '@/history/entities/ep-history.entity';
 import { ListEpHistoryDto, WriteEpHistoryDto } from '@/history/history.dto';
-import { PaginateConfig } from 'nestjs-paginate';
 import { HistoryService } from '@/history/services/history.service';
 import { AudioBookEpService } from '@/audio-book/audio-book-ep.service';
-import { History } from '@/history/entities/history.entity';
-import { AudioBookEp } from '@/audio-book/entities/audio-book-ep.entity';
 
 @Injectable()
 export class EpHistoryService extends BaseService<EpHistory> {

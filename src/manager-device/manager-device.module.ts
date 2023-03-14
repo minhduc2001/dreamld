@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+// BASE
+
+// APPS
 import { DeviceService } from '@/manager-device/device.service';
 import { DeviceController } from '@/manager-device/device.controller';
 import { Device } from '@/manager-device/entities/device.entity';

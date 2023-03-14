@@ -5,10 +5,12 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
-import { AudioBookService } from '@/audio-book/audio-book.service';
+
+// BASE
 import { LoggerService } from '@base/logger';
-import { ListAudioBookDto } from '@/audio-book/dtos/audio-book.dto';
+
+// APPS
+import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
 import { AudioBookEpService } from '@/audio-book/audio-book-ep.service';
 import { ListAudioBookEpDto } from '@/audio-book/dtos/audio-book-ep.dto';
 

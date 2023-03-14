@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PaginateConfig } from 'nestjs-paginate';
 
-import { AudioBook } from '@/audio-book/entities/audio-book.entity';
-
+// BASE
+import * as exc from '@base/api/exception.reslover';
 import { BaseService } from '@base/service/base.service';
 import { LoggerService } from '@base/logger';
-import { PaginateConfig } from 'nestjs-paginate';
-import { ListAudioBookDto } from '@/audio-book/dtos/audio-book.dto';
 
-import * as exc from '@base/api/exception.reslover';
+// APPS
+import { ListAudioBookDto } from '@/audio-book/dtos/audio-book.dto';
+import { AudioBook } from '@/audio-book/entities/audio-book.entity';
+
 @Injectable()
 export class AudioBookService extends BaseService<AudioBook> {
   constructor(
