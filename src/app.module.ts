@@ -21,7 +21,6 @@ import { AudioBookModule } from './audio-book/audio-book.module';
 import { HistoryModule } from './history/history.module';
 import { CommentModule } from './comment/comment.module';
 import { PaymentModule } from './payment/payment.module';
-import { FavoriteModule } from './favorite/favorite.module';
 import { LibraryModule } from './library/library.module';
 import { AuthorModule } from './author/author.module';
 
@@ -36,7 +35,6 @@ const appModule = [
   HistoryModule,
   CommentModule,
   PaymentModule,
-  FavoriteModule,
   LibraryModule,
   AuthorModule,
 ];

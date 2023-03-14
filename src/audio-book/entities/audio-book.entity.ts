@@ -12,6 +12,8 @@ import { Author } from '@/author/author.entity';
 import { AudioBookEp } from '@/audio-book/entities/audio-book-ep.entity';
 import { Comment } from '@/comment/comment.entity';
 import { History } from '@/history/entities/history.entity';
+import { Library } from '@/library/entities/library.entity';
+import { AudioBookLibrary } from '@/library/entities/audio-book-library.entity';
 
 @Entity()
 export class AudioBook extends AbstractEntity {
@@ -54,4 +56,10 @@ export class AudioBook extends AbstractEntity {
   @OneToMany(() => History, (history) => history.user)
   @JoinColumn()
   history: History[];
+
+  @OneToMany(
+    () => AudioBookLibrary,
+    (audioBookLibrary) => audioBookLibrary.audioBook,
+  )
+  audioBookLibrary: AudioBookLibrary[];
 }
