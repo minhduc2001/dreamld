@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
+// BASE
 import * as exc from '@base/api/exception.reslover';
-import { UserService } from '@/user/user.service';
-import { CheckPhoneDto, LoginDto, RegisterDto } from './dtos/auth.dto';
-import { IJWTPayload } from './interfaces/auth.interface';
 import { LoggerService } from '@base/logger';
-import { DeviceService } from '@/manager-device/device.service';
-import { LoggedDeviceService } from '@/manager-device/logged-device.service';
+
+// APPS
+import { UserService } from '@/user/user.service';
+import { CheckPhoneDto, LoginDto, RegisterDto } from '@/auth/dtos/auth.dto';
+import { IJWTPayload } from '@/auth/interfaces/auth.interface';
+import { DeviceService } from '@/manager-device/services/device.service';
+import { LoggedDeviceService } from '@/manager-device/services/logged-device.service';
 
 @Injectable()
 export class AuthService {
