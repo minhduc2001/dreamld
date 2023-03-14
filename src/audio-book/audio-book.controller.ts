@@ -2,7 +2,9 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
+  Put,
   Query,
   UploadedFile,
   UploadedFiles,
@@ -20,8 +22,10 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 // BASE
 import { LoggerService } from '@base/logger';
 import * as exc from '@base/api/exception.reslover';
+import { FileService } from '@base/helper/file.service';
 
 import { checkFiles } from '@shared/validator/type-file.validator';
+import { ParamIdDto } from '@shared/dtos/common.dto';
 
 // APPS
 import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
@@ -29,10 +33,10 @@ import { AudioBookService } from '@/audio-book/audio-book.service';
 import {
   CreateAudioBookDto,
   ListAudioBookDto,
+  UpdateAudioBookDto,
 } from '@/audio-book/dtos/audio-book.dto';
 import { Roles } from '@/role/roles.decorator';
 import { ERole } from '@/role/enum/roles.enum';
-import { FileService } from '@base/helper/file.service';
 
 @Controller('audio-book')
 @ApiTags('Audio Book')
@@ -57,7 +61,7 @@ export class AudioBookController {
   @Post()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FilesInterceptor('files'))
-  @Roles(ERole.Admin)
+  // @Roles(ERole.Admin)
   async createAudioBook(
     @Body() dto: CreateAudioBookDto,
     @UploadedFiles() files: Array<Express.Multer.File>,
@@ -66,6 +70,32 @@ export class AudioBookController {
       const fileName = checkFiles(files);
       return this.service.createAudioBook({
         ...dto,
+        files: fileName,
+      });
+    } catch (e) {
+      this.logger.warn(e.message);
+      for (const file of files) {
+        this.fileService.removeFile(file.filename);
+      }
+      throw new exc.BadException({ message: e.message });
+    }
+  }
+
+  @ApiOperation({ summary: 'sửa audio book' })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('files'))
+  // @Roles(ERole.Admin)
+  @Put(':id')
+  async updateAudioBook(
+    @Body() dto: UpdateAudioBookDto,
+    @Param() param: ParamIdDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    try {
+      const fileName = checkFiles(files);
+      return this.service.updateAudioBook({
+        ...dto,
+        ...param,
         files: fileName,
       });
     } catch (e) {

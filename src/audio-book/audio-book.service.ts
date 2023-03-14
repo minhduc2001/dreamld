@@ -12,6 +12,7 @@ import { LoggerService } from '@base/logger';
 import {
   CreateAudioBookDto,
   ListAudioBookDto,
+  UpdateAudioBookDto,
 } from '@/audio-book/dtos/audio-book.dto';
 import { AudioBook } from '@/audio-book/entities/audio-book.entity';
 import { AuthorService } from '@/author/author.service';
@@ -63,6 +64,29 @@ export class AudioBookService extends BaseService<AudioBook> {
       this.logger.warn(e);
       throw new exc.BadException({ message: e.message });
     }
+  }
+
+  async updateAudioBook(dto: UpdateAudioBookDto) {
+    const audioBook = await this.getAudioBook(dto.id);
+
+    const authors = await this._findAuthor(dto.author);
+    const genres = await this._findGenre(dto.genre);
+
+    if (dto.title) {
+      audioBook.title = dto.title;
+    }
+
+    audioBook.author = authors;
+    audioBook.genre = genres;
+    await audioBook.save();
+
+    await this.repository.update(dto.id, {
+      accomplished: dto.accomplished,
+      description: dto.description,
+      publicationDate: dto.publicationDate,
+      images: dto.files,
+    });
+    return true;
   }
 
   // Private func

@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 // BASE
@@ -8,6 +8,7 @@ import { LoggerService } from '@base/logger';
 import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
 import { AuthorService } from '@/author/author.service';
 import { ListAuthorDto } from '@/author/author.dto';
+import { ParamIdDto } from '@shared/dtos/common.dto';
 
 @Controller('author')
 @ApiTags('Author')
@@ -25,5 +26,11 @@ export class AuthorController {
   @Get()
   async listAuthor(@Query() query: ListAuthorDto) {
     return this.service.listAuthor(query);
+  }
+
+  @ApiOperation({ summary: 'Lấy ra 1 tác giả' })
+  @Get(':id')
+  async getAuthor(@Param() param: ParamIdDto) {
+    return this.service.getAuthor(param.id);
   }
 }
