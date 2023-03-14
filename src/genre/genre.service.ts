@@ -31,4 +31,10 @@ export class GenreService extends BaseService<Genre> {
 
     return this.listWithPage(query, config);
   }
+
+  async getGenre(id: number) {
+    const genre = await this.repository.findOne({ where: { id: id } });
+    if (!genre) throw new exc.BadRequest({ message: 'genre không tồn tại' });
+    return genre;
+  }
 }

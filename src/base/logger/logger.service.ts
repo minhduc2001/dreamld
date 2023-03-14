@@ -13,7 +13,7 @@ const appenders = {
     filename: 'logs/combined.log',
     pattern: '-yyyy-MM-dd',
     maxLogSize: 1024 * 1024 * 10, // 10 MB
-    backups: 3,
+    backups: 5,
   },
 };
 

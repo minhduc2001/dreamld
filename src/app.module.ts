@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from '@/config';
 import { LoggerModule } from '@base/logger/logger.module';
 import { dbConfig } from '@base/db/db.config';
+import { HelperModule } from '@base/helper/helper.module';
 
 // APPS
 import { UserModule } from '@/user/user.module';
@@ -38,7 +39,7 @@ const appModule = [
   LibraryModule,
   AuthorModule,
 ];
-const baseModule = [LoggerModule];
+const baseModule = [LoggerModule, HelperModule];
 
 @Module({
   imports: [

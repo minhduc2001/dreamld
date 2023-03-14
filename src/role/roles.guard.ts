@@ -3,6 +3,8 @@ import { Reflector } from '@nestjs/core';
 import { ERole } from '@/role/enum/roles.enum';
 import { ROLES_KEY } from '@/role/roles.decorator';
 
+import * as exc from '@base/api/exception.reslover';
+
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
@@ -16,6 +18,8 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const { user } = context.switchToHttp().getRequest();
-    return requiredRoles.some((role) => user.roles?.includes(role));
+    const check = requiredRoles.some((role) => user.role?.includes(role));
+    if (!check) throw new exc.Forbidden({ message: 'you are not admin' });
+    return check;
   }
 }
