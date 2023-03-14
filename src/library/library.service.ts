@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { BaseService } from '@base/service/base.service';
-import { Library } from '@/library/entities/library.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoggerService } from '@base/logger';
-import { CreateLibraryDto, ListLibraryDto } from '@/library/library.dto';
 import { PaginateConfig } from 'nestjs-paginate';
+
+// BASE
+import { BaseService } from '@base/service/base.service';
+import { LoggerService } from '@base/logger';
 import * as exc from '@base/api/exception.reslover';
+
+// APPS
+import { Library } from '@/library/entities/library.entity';
+import { CreateLibraryDto, ListLibraryDto } from '@/library/library.dto';
 
 @Injectable()
 export class LibraryService extends BaseService<Library> {

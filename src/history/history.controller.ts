@@ -8,19 +8,24 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+
+// BASE
+import { LoggerService } from '@base/logger';
+
+// SHARED
+import { ParamIdDto } from '@shared/dtos/common.dto';
+
+// APPS
 import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
 import { HistoryService } from '@/history/services/history.service';
-import { LoggerService } from '@base/logger';
 import { EpHistoryService } from '@/history/services/ep-history.service';
 import {
   ListEpHistoryDto,
   ListHistoryDto,
   WriteEpHistoryDto,
-  WriteHistoryDto,
 } from '@/history/history.dto';
 import { GetUser } from '@/auth/decorator/get-user.decorator';
 import { User } from '@/user/entities/user.entity';
-import { ParamIdDto } from '@shared/dtos/common.dto';
 
 @Controller('history')
 @ApiTags('History')

@@ -9,20 +9,19 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+
+import { PERMISSIONS } from '@shared/constants/permission.constant';
 
 // APPS
-import { User } from './entities/user.entity';
-import { UserService } from './user.service';
-import { AuthGuard } from '@nestjs/passport';
+import { User } from '@/user/entities/user.entity';
+import { UserService } from '@/user/user.service';
 import { Roles } from '@/role/roles.decorator';
 import { ERole } from '@/role/enum/roles.enum';
 import { Public } from '@/auth/decorator/public.decorator';
 import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
-import { ListUserDto, UploadAvatarDto } from './dtos/user.dto';
+import { ListUserDto, UploadAvatarDto } from '@/user/dtos/user.dto';
 import { Permissions } from '@/role/permission.decorator';
-import { PERMISSIONS } from '@shared/constants/permission.constant';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { uploadUrl } from '@base/helper/url.helper';
 
 @Controller('users')
 @ApiBearerAuth()

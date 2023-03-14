@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { EState } from '@shared/enum/common.enum';
 import { Permission } from '@/role/entities/permission.entity';
 import {
   PERMISSIONS,

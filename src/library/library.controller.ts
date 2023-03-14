@@ -7,9 +7,14 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { LibraryService } from '@/library/library.service';
-import { LoggerService } from '@base/logger';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+// BASE
+import { LoggerService } from '@base/logger';
+import * as exc from '@base/api/exception.reslover';
+
+// APPS
+import { LibraryService } from '@/library/library.service';
 import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
 import {
   CreateAudioBookLibraryDto,
@@ -20,6 +25,8 @@ import {
 import { GetUser } from '@/auth/decorator/get-user.decorator';
 import { User } from '@/user/entities/user.entity';
 import { AudioBookLibraryService } from '@/library/audio-book-library.service';
+
+// SHARED
 import { ParamIdDto } from '@shared/dtos/common.dto';
 
 @Controller('library')

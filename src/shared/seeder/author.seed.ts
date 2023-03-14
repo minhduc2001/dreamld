@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { Author } from '@/author/author.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Author } from '@/author/author.entity';
 
 export class AuthorSeed {
   constructor(

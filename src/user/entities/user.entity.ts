@@ -1,16 +1,17 @@
 import { Column, Entity, JoinColumn, ManyToMany, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
-import { ERole } from '@/role/enum/roles.enum';
-import { AbstractEntity } from '@/base/service/abstract-entity.service';
-import { Permission } from '@/role/entities/permission.entity';
 import { JoinTable } from 'typeorm';
-import { EState } from '@shared/enum/common.enum';
-import { Device } from '@/manager-device/entities/device.entity';
+
+import { AbstractEntity } from '@base/service/abstract-entity.service';
+
+import { ERole } from '@/role/enum/roles.enum';
+import { Permission } from '@/role/entities/permission.entity';
 import { LoggedDevice } from '@/manager-device/entities/logged-device.entity';
 import { History } from '@/history/entities/history.entity';
 import { Library } from '@/library/entities/library.entity';
 
+import { EState } from '@shared/enum/common.enum';
 @Entity()
 export class User extends AbstractEntity {
   @Column({ nullable: true })

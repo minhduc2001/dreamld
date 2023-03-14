@@ -1,13 +1,12 @@
 import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
-import { DeviceService } from '@/manager-device/device.service';
-import { LoggerService } from '@base/logger';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+// BASE
+import { LoggerService } from '@base/logger';
+
+//APPS
 import { JwtAuthGuard } from '@/auth/guard/jwt-auth.guard';
 import { LoggedDeviceService } from '@/manager-device/logged-device.service';
-import {
-  ListDeviceLoggedDto,
-  LogoutDeviceDto,
-} from '@/manager-device/dtos/logged-device.dto';
 import { GetUser } from '@/auth/decorator/get-user.decorator';
 import { User } from '@/user/entities/user.entity';
 

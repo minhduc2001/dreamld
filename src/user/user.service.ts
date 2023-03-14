@@ -14,8 +14,7 @@ import {
   ICreateUser,
   IUserGetByUniqueKey,
 } from '@/user/interfaces/user.interface';
-
-import { ListUserDto, UploadAvatarDto } from './dtos/user.dto';
+import { ListUserDto, UploadAvatarDto } from '@/user/dtos/user.dto';
 
 @Injectable()
 export class UserService extends BaseService<User> {

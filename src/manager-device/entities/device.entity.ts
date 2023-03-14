@@ -1,6 +1,5 @@
 import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { AbstractEntity } from '@base/service/abstract-entity.service';
-import { User } from '@/user/entities/user.entity';
 import { LoggedDevice } from '@/manager-device/entities/logged-device.entity';
 
 @Entity()
