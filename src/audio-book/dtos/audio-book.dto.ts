@@ -1,5 +1,10 @@
 import { ListDto } from '@shared/dtos/common.dto';
-import { ApiProperty } from '@nestjs/swagger';
+import {
+  ApiHideProperty,
+  ApiProperty,
+  OmitType,
+  PickType,
+} from '@nestjs/swagger';
 import {
   IsArray,
   IsBoolean,
@@ -9,7 +14,7 @@ import {
   IsPositive,
   IsString,
 } from 'class-validator';
-import { ToNumbers, Trim } from '@base/decorators/common.decorator';
+import { ToNumber, ToNumbers, Trim } from '@base/decorators/common.decorator';
 
 export class ListAudioBookDto extends ListDto {}
 
@@ -59,4 +64,20 @@ export class CreateAudioBookDto {
   })
   @IsOptional()
   files: string[];
+}
+
+export class UpdateAudioBookDto extends OmitType(CreateAudioBookDto, [
+  'title',
+]) {
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @Trim()
+  @IsString()
+  title: string;
+
+  @ApiHideProperty()
+  @IsOptional()
+  @ToNumber()
+  @IsPositive()
+  id: number;
 }

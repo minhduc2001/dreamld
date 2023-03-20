@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 
 // BASE
 import * as exc from '@base/api/exception.reslover';
@@ -12,10 +12,14 @@ import { PaginateConfig } from '@base/service/paginate';
 import {
   CreateAudioBookDto,
   ListAudioBookDto,
+  UpdateAudioBookDto,
 } from '@/audio-book/dtos/audio-book.dto';
 import { AudioBook } from '@/audio-book/entities/audio-book.entity';
 import { AuthorService } from '@/author/author.service';
 import { GenreService } from '@/genre/genre.service';
+import { User } from '@/user/entities/user.entity';
+import { Library } from '@/library/entities/library.entity';
+import { AudioBookLibrary } from '@/library/entities/audio-book-library.entity';
 
 @Injectable()
 export class AudioBookService extends BaseService<AudioBook> {
@@ -25,6 +29,7 @@ export class AudioBookService extends BaseService<AudioBook> {
     private readonly authorService: AuthorService,
     private readonly genreService: GenreService,
     private readonly loggerService: LoggerService,
+    private dataSource: DataSource,
   ) {
     super(repository);
   }
@@ -64,6 +69,75 @@ export class AudioBookService extends BaseService<AudioBook> {
       throw new exc.BadException({ message: e.message });
     }
   }
+
+  async updateAudioBook(dto: UpdateAudioBookDto) {
+    const audioBook = await this.getAudioBook(dto.id);
+
+    const authors = await this._findAuthor(dto.author);
+    const genres = await this._findGenre(dto.genre);
+
+    if (dto.title) {
+      audioBook.title = dto.title;
+    }
+
+    audioBook.author = authors;
+    audioBook.genre = genres;
+    await audioBook.save();
+
+    await this.repository.update(dto.id, {
+      accomplished: dto.accomplished,
+      description: dto.description,
+      publicationDate: dto.publicationDate,
+      images: dto.files,
+    });
+    return true;
+  }
+
+  async like(id: number, user?: User) {
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const check = await queryRunner.manager.findOne(AudioBookLibrary, {
+        where: {
+          audioBook: { id: id },
+          library: { name: 'Yêu thích', user: { id: user.id } },
+        },
+      });
+
+      const audioBook = await queryRunner.manager.findOne(AudioBook, {
+        where: { id: id },
+      });
+
+      if (check) {
+        audioBook.likes -= 1;
+        await queryRunner.manager.delete(AudioBookLibrary, check.id);
+      } else {
+        audioBook.likes += 1;
+        const audioBookLib = new AudioBookLibrary();
+        const lib = await queryRunner.manager.findOne(Library, {
+          where: { name: 'Yêu thích', user: { id: user.id } },
+        });
+
+        audioBookLib.audioBook = audioBook;
+        audioBookLib.library = lib;
+
+        await queryRunner.manager.save(audioBookLib);
+      }
+
+      await queryRunner.manager.save(audioBook);
+      await queryRunner.commitTransaction();
+      return true;
+    } catch (e) {
+      await queryRunner.rollbackTransaction();
+      throw new exc.BadRequest({ message: e.message });
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async follow(id: number) {}
 
   // Private func
 
