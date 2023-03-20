@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 
 // BASE
 import * as exc from '@base/api/exception.reslover';
@@ -17,6 +17,9 @@ import {
 import { AudioBook } from '@/audio-book/entities/audio-book.entity';
 import { AuthorService } from '@/author/author.service';
 import { GenreService } from '@/genre/genre.service';
+import { User } from '@/user/entities/user.entity';
+import { Library } from '@/library/entities/library.entity';
+import { AudioBookLibrary } from '@/library/entities/audio-book-library.entity';
 
 @Injectable()
 export class AudioBookService extends BaseService<AudioBook> {
@@ -26,6 +29,7 @@ export class AudioBookService extends BaseService<AudioBook> {
     private readonly authorService: AuthorService,
     private readonly genreService: GenreService,
     private readonly loggerService: LoggerService,
+    private dataSource: DataSource,
   ) {
     super(repository);
   }
@@ -88,6 +92,52 @@ export class AudioBookService extends BaseService<AudioBook> {
     });
     return true;
   }
+
+  async like(id: number, user?: User) {
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const check = await queryRunner.manager.findOne(AudioBookLibrary, {
+        where: {
+          audioBook: { id: id },
+          library: { name: 'Yêu thích', user: { id: user.id } },
+        },
+      });
+
+      const audioBook = await queryRunner.manager.findOne(AudioBook, {
+        where: { id: id },
+      });
+
+      if (check) {
+        audioBook.likes -= 1;
+        await queryRunner.manager.delete(AudioBookLibrary, check.id);
+      } else {
+        audioBook.likes += 1;
+        const audioBookLib = new AudioBookLibrary();
+        const lib = await queryRunner.manager.findOne(Library, {
+          where: { name: 'Yêu thích', user: { id: user.id } },
+        });
+
+        audioBookLib.audioBook = audioBook;
+        audioBookLib.library = lib;
+
+        await queryRunner.manager.save(audioBookLib);
+      }
+
+      await queryRunner.manager.save(audioBook);
+      await queryRunner.commitTransaction();
+      return true;
+    } catch (e) {
+      await queryRunner.rollbackTransaction();
+      throw new exc.BadRequest({ message: e.message });
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async follow(id: number) {}
 
   // Private func
 

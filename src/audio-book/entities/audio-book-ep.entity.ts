@@ -10,6 +10,9 @@ export class AudioBookEp extends AbstractEntity {
   title: string;
 
   @Column({ nullable: true })
+  name: string;
+
+  @Column({ nullable: true })
   description: string;
 
   @Column({ nullable: true })

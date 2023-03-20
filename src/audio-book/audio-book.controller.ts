@@ -37,6 +37,8 @@ import {
 } from '@/audio-book/dtos/audio-book.dto';
 import { Roles } from '@/role/roles.decorator';
 import { ERole } from '@/role/enum/roles.enum';
+import { GetUser } from '@/auth/decorator/get-user.decorator';
+import { User } from '@/user/entities/user.entity';
 
 @Controller('audio-book')
 @ApiTags('Audio Book')
@@ -79,6 +81,12 @@ export class AudioBookController {
       }
       throw new exc.BadException({ message: e.message });
     }
+  }
+
+  @ApiOperation({ summary: 'yêu thích' })
+  @Post('like')
+  async like(@Body() dto: ParamIdDto, @GetUser() user: User) {
+    return this.service.like(dto.id, user);
   }
 
   @ApiOperation({ summary: 'sửa audio book' })
