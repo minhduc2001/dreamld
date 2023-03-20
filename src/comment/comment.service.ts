@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PaginateConfig } from 'nestjs-paginate';
 
+import { PaginateConfig } from '@base/service/paginate';
 import { BaseService } from '@base/service/base.service';
 import { LoggerService } from '@base/logger';
 import * as exc from '@base/api/exception.reslover';
