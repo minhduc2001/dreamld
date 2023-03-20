@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginateConfig } from 'nestjs-paginate';
 
 // BASE
 import { BaseService } from '@base/service/base.service';
 import { LoggerService } from '@base/logger';
 import * as exc from '@base/api/exception.reslover';
+import { PaginateConfig } from '@base/service/paginate';
 
 // APPS
 import { AudioBookEp } from '@/audio-book/entities/audio-book-ep.entity';
