@@ -1,4 +1,3 @@
-import { paginate, PaginateConfig, PaginateQuery } from 'nestjs-paginate';
 import {
   FindManyOptions,
   FindOneOptions,
@@ -6,6 +5,11 @@ import {
   SelectQueryBuilder,
 } from 'typeorm';
 import { EState } from '@shared/enum/common.enum';
+import {
+  paginate,
+  PaginateConfig,
+  PaginateQuery,
+} from '@base/service/paginate';
 
 export abstract class BaseService<T> {
   protected constructor(protected readonly repository: Repository<T>) {}

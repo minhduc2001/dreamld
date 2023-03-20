@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginateConfig } from 'nestjs-paginate';
 
 // BASE
 import { BaseService } from '@base/service/base.service';
 import { LoggerService } from '@base/logger';
+import { PaginateConfig } from '@base/service/paginate';
 
 // APPS
 import { EpHistory } from '@/history/entities/ep-history.entity';
