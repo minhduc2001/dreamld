@@ -137,7 +137,49 @@ export class AudioBookService extends BaseService<AudioBook> {
     }
   }
 
-  async follow(id: number) {}
+  async follow(id: number, user?: User) {
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const check = await queryRunner.manager.findOne(AudioBookLibrary, {
+        where: {
+          audioBook: { id: id },
+          library: { name: 'Theo dõi', user: { id: user.id } },
+        },
+      });
+
+      const audioBook = await queryRunner.manager.findOne(AudioBook, {
+        where: { id: id },
+      });
+
+      if (check) {
+        audioBook.followers -= 1;
+        await queryRunner.manager.delete(AudioBookLibrary, check.id);
+      } else {
+        audioBook.followers += 1;
+        const audioBookLib = new AudioBookLibrary();
+        const lib = await queryRunner.manager.findOne(Library, {
+          where: { name: 'Theo dõi', user: { id: user.id } },
+        });
+
+        audioBookLib.audioBook = audioBook;
+        audioBookLib.library = lib;
+
+        await queryRunner.manager.save(audioBookLib);
+      }
+
+      await queryRunner.manager.save(audioBook);
+      await queryRunner.commitTransaction();
+      return true;
+    } catch (e) {
+      await queryRunner.rollbackTransaction();
+      throw new exc.BadRequest({ message: e.message });
+    } finally {
+      await queryRunner.release();
+    }
+  }
 
   // Private func
 

@@ -41,6 +41,17 @@ export class EpHistoryService extends BaseService<EpHistory> {
       where: { history: { id: historyId }, audioBookEp: { id: audioBookEpId } },
     });
   }
+
+  async getEpHistorybyUser(audioBookId: number, userId: number) {
+    const check = await this.repository.findOne({
+      where: {
+        audioBookEp: { id: audioBookId },
+        history: { user: { id: userId } },
+      },
+    });
+    return { duration: check ? check.duration : 0 };
+  }
+
   async writeEpHistory(dto: WriteEpHistoryDto) {
     const audioBookEp = await this.audioBookEpService.getAudioBookEp(
       dto.audioBookEpId,

@@ -58,6 +58,12 @@ export class HistoryController {
     });
   }
 
+  @ApiOperation({ summary: 'check audio book có lịch sử xem ko' })
+  @Get('ep/:id')
+  async checkHistory(@Param() param: ParamIdDto, @GetUser() user: User) {
+    return this.epHistoryService.getEpHistorybyUser(param.id, user.id);
+  }
+
   // @ApiOperation({ summary: 'Tạo lịch sử audio book' })
   // @Post()
   // async writeHistory(@Body() dto: WriteHistoryDto, @GetUser() user: User) {

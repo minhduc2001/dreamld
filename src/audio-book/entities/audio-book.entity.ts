@@ -29,6 +29,9 @@ export class AudioBook extends AbstractEntity {
   @Column({ nullable: true, default: 0 })
   likes: number;
 
+  @Column({ nullable: true, default: 0 })
+  followers: number;
+
   @Column({ nullable: true, default: '' })
   description: string;
 

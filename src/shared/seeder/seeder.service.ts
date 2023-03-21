@@ -5,6 +5,7 @@ import { AuthorSeed } from '@shared/seeder/author.seed';
 import { GenreSeed } from '@shared/seeder/genre.seed';
 import { AudioBookSeed } from '@shared/seeder/audio-book.seed';
 import { AudioBookEpSeed } from '@shared/seeder/audio-book-ep.seed';
+import { LibrarySeed } from '@shared/seeder/library.seed';
 
 @Injectable()
 export class SeederService implements OnModuleInit {
@@ -15,6 +16,7 @@ export class SeederService implements OnModuleInit {
     private readonly genreSeed: GenreSeed,
     private readonly audioBookSeed: AudioBookSeed,
     private readonly audioBookEpSeed: AudioBookEpSeed,
+    private readonly librarySeed: LibrarySeed,
   ) {}
 
   async onModuleInit() {
@@ -25,6 +27,7 @@ export class SeederService implements OnModuleInit {
     await this.genreSeed.seed();
     await this.audioBookSeed.seed();
     await this.audioBookEpSeed.seed();
+    await this.librarySeed.seed();
     console.info('done!!!!');
   }
 }
