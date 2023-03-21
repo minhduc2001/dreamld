@@ -59,6 +59,12 @@ export class AudioBookController {
     return this.service.listAudioBook(query);
   }
 
+  @ApiOperation({ summary: 'Lấy chi tiết audio book' })
+  @Get(':id')
+  async getAudioBook(@Param() param: ParamIdDto) {
+    return;
+  }
+
   @ApiOperation({ summary: 'Tạo audio book' })
   @Post()
   @ApiConsumes('multipart/form-data')
@@ -87,6 +93,12 @@ export class AudioBookController {
   @Post('like')
   async like(@Body() dto: ParamIdDto, @GetUser() user: User) {
     return this.service.like(dto.id, user);
+  }
+
+  @ApiOperation({ summary: 'Theo dõi' })
+  @Post('followers')
+  async follow(@Body() dto: ParamIdDto, @GetUser() user: User) {
+    return this.service.follow(dto.id, user);
   }
 
   @ApiOperation({ summary: 'sửa audio book' })

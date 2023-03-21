@@ -15,6 +15,8 @@ import { AuthorSeed } from '@shared/seeder/author.seed';
 import { GenreSeed } from '@shared/seeder/genre.seed';
 import { AudioBookSeed } from '@shared/seeder/audio-book.seed';
 import { AudioBookEpSeed } from '@shared/seeder/audio-book-ep.seed';
+import { Library } from '@/library/entities/library.entity';
+import { LibrarySeed } from '@shared/seeder/library.seed';
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { AudioBookEpSeed } from '@shared/seeder/audio-book-ep.seed';
       Genre,
       AudioBook,
       AudioBookEp,
+      Library,
     ]),
   ],
   providers: [
@@ -35,6 +38,7 @@ import { AudioBookEpSeed } from '@shared/seeder/audio-book-ep.seed';
     GenreSeed,
     AudioBookSeed,
     AudioBookEpSeed,
+    LibrarySeed,
   ],
 })
 export class SeedersModule {}

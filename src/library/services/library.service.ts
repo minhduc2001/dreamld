@@ -44,6 +44,7 @@ export class LibraryService extends BaseService<Library> {
       .where('unaccent(library.name) ILIKE unaccent(:name)', {
         name: dto.name,
       })
+      .andWhere(`library.user = :userId`, { userId: dto.user.id })
       .getOne();
 
     if (library) throw new exc.BadException({ message: 'thư viện đã tồn tại' });
