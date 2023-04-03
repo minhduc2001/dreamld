@@ -1,0 +1,46 @@
+version: '3.3'
+
+services:
+  hr_database:
+    container_name: hr_database
+    image: postgres:13.6-alpine
+    restart: always
+    environment:
+      TZ: 'Asia/Ho_Chi_Minh'
+      PGTZ: 'Asia/Ho_Chi_Minh'
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - ./docker/db/postgres/data/:/var/lib/postgresql/data
+      - ./docker/db/postgres/postgres.conf:/etc/postgresql/postgresql.conf
+      - ./docker/db/postgres/init/:/docker-entrypoint-initdb.d
+    env_file:
+      - .env
+
+  # redis ------------------------------------------
+  hr_redis:
+    container_name: hr_redis
+    image: redis:6.2.5-alpine
+    restart: always
+    ports:
+      - ${REDIS_PORT}:6379
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    env_file:
+      - .env
+
+  hr-backend:
+    container_name: hr-be
+    image: devopstina/hr-be:latest
+    #    build:
+    #      context: .
+    #      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - ${PORT}:8000
+    env_file:
+      - .env

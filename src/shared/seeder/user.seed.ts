@@ -7,7 +7,7 @@ import { User } from '@/user/entities/user.entity';
 import { Permission } from '@/role/entities/permission.entity';
 import { ERole } from '@/role/enum/roles.enum';
 
-const permissionGroup = [1];
+const permissionGroup = [1, 2, 3];
 const data = [
   {
     username: 'admin',

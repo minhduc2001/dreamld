@@ -35,6 +35,12 @@ export class ConfigService {
   // file
   MAX_FILE_SIZE = 10000000; // 10MB;
   UPLOAD_LOCATION = 'uploads';
+
+  // Momo
+  PARTNER_CODE = _process.env.PARTNER_CODE;
+  ACCESS_KEY = _process.env.ACCESS_KEY;
+  SECRET_KEY = _process.env.SECRET_KEY;
+  ENVIRONMENT = _process.env.ENVIRONMENT ?? 'sandbox';
 }
 
 export const config = new ConfigService();

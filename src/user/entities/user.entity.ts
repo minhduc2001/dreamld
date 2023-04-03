@@ -12,6 +12,7 @@ import { History } from '@/history/entities/history.entity';
 import { Library } from '@/library/entities/library.entity';
 
 import { EState } from '@shared/enum/common.enum';
+import { Payment } from '@/payment/payment.entity';
 @Entity()
 export class User extends AbstractEntity {
   @Column({ nullable: true })
@@ -51,6 +52,16 @@ export class User extends AbstractEntity {
   @OneToMany(() => Library, (library) => library.user)
   @JoinColumn()
   library: Library[];
+
+  @OneToMany(() => Payment, (payment) => payment.user)
+  @JoinColumn()
+  payments: Payment[];
+
+  @Column({ nullable: true, default: null })
+  packageId: number;
+
+  @Column({ type: 'bigint', nullable: true, default: null })
+  packageExpire: string;
 
   @Column({ type: 'enum', enum: EState, default: EState.Active })
   state: EState;
