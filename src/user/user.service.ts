@@ -52,13 +52,21 @@ export class UserService extends BaseService<User> {
   }
 
   async createUser(data: ICreateUser) {
-    const user: User = this.repository.create(data);
-    user.setPassword(data.password);
-    await user.save();
+    try {
+      const user: User = this.repository.create(data);
+      user.setPassword(data.password);
+      await user.save();
 
-    await this.libraryService.createLibrary({ user: user, name: 'Yêu thích' });
-    await this.libraryService.createLibrary({ user: user, name: 'Theo dõi' });
-    return;
+      await this.libraryService.createLibrary({
+        user: user,
+        name: 'Yêu thích',
+      });
+      await this.libraryService.createLibrary({ user: user, name: 'Theo dõi' });
+      return;
+    } catch (e) {
+      this.logger.warn(e);
+      throw new exc.BadException({ message: e.message });
+    }
   }
 
   async getAllUser(query: ListUserDto) {

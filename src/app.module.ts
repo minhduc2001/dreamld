@@ -49,8 +49,8 @@ const baseModule = [LoggerModule, HelperModule];
     TypeOrmModule.forRoot(dbConfig),
     BullModule.forRoot({
       redis: {
-        host: 'localhost',
-        port: 6379,
+        host: config.REDIS_HOST,
+        port: config.REDIS_PORT,
       },
     }),
     SeedersModule,

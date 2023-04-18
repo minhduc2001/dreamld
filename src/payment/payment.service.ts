@@ -53,7 +53,7 @@ export class PaymentService
       if (channel === '__keyevent@0__:expired') {
         if (message.startsWith('transaction:')) {
           const id = message.split(':')[1];
-          await this.cancelPayment(id);
+          await this.cancelPayment(Number(id));
         }
       }
     });

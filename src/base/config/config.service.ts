@@ -41,6 +41,10 @@ export class ConfigService {
   ACCESS_KEY = _process.env.ACCESS_KEY;
   SECRET_KEY = _process.env.SECRET_KEY;
   ENVIRONMENT = _process.env.ENVIRONMENT ?? 'sandbox';
+
+  // Redis
+  REDIS_HOST = _process.env.REDIS_HOST;
+  REDIS_PORT = +_process.env.REDIS_PORT;
 }
 
 export const config = new ConfigService();
