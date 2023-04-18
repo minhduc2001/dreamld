@@ -51,14 +51,28 @@ export class UserService extends BaseService<User> {
     return this.repository.findOne({ where: { id: id } });
   }
 
-  async createUser(data: ICreateUser) {
-    const user: User = this.repository.create(data);
-    user.setPassword(data.password);
-    await user.save();
+  async getUser(id: number) {
+    const user = await this.getUserById(id);
+    if (!user) throw new exc.BadException({ message: 'user không tồn tại!' });
+    return user;
+  }
 
-    await this.libraryService.createLibrary({ user: user, name: 'Yêu thích' });
-    await this.libraryService.createLibrary({ user: user, name: 'Theo dõi' });
-    return;
+  async createUser(data: ICreateUser) {
+    try {
+      const user: User = this.repository.create(data);
+      user.setPassword(data.password);
+      await user.save();
+
+      await this.libraryService.createLibrary({
+        user: user,
+        name: 'Yêu thích',
+      });
+      await this.libraryService.createLibrary({ user: user, name: 'Theo dõi' });
+      return;
+    } catch (e) {
+      this.logger.warn(e);
+      throw new exc.BadException({ message: e.message });
+    }
   }
 
   async getAllUser(query: ListUserDto) {
@@ -93,4 +107,20 @@ export class UserService extends BaseService<User> {
   }
 
   async countDeviceLogged(userId) {}
+
+  public async validRefreshToken(userId: number, refreshToken: string) {
+    console.log(userId, refreshToken);
+    const user = await this.repository.findOne({
+      where: {
+        id: userId,
+        refreshToken: refreshToken,
+      },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
 }

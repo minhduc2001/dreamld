@@ -7,6 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { ToNumbers } from '@base/decorators/common.decorator';
 
 export class ListDto {
   @ApiProperty({ required: false })
@@ -52,4 +53,12 @@ export class ParamIdDto {
   @IsNotEmpty()
   @IsPositive()
   id: number;
+}
+
+export class BulkIdsDto {
+  @ApiProperty()
+  @ToNumbers()
+  @IsNotEmpty()
+  @IsPositive({ each: true })
+  ids: number[];
 }

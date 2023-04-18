@@ -24,6 +24,7 @@ import { MailerModule } from '@/mailer/mailer.module';
 
 // SHARED
 import { SeedersModule } from '@shared/seeder/seeder.module';
+import { BullModule } from '@nestjs/bull';
 
 const appModule = [
   AuthModule,
@@ -46,6 +47,12 @@ const baseModule = [LoggerModule, HelperModule];
     ...baseModule,
     ...appModule,
     TypeOrmModule.forRoot(dbConfig),
+    BullModule.forRoot({
+      redis: {
+        host: config.REDIS_HOST,
+        port: config.REDIS_PORT,
+      },
+    }),
     SeedersModule,
   ],
   controllers: [],

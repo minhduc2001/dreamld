@@ -12,6 +12,7 @@ import { History } from '@/history/entities/history.entity';
 import { Library } from '@/library/entities/library.entity';
 
 import { EState } from '@shared/enum/common.enum';
+import { Payment } from '@/payment/payment.entity';
 @Entity()
 export class User extends AbstractEntity {
   @Column({ nullable: true })
@@ -52,15 +53,41 @@ export class User extends AbstractEntity {
   @JoinColumn()
   library: Library[];
 
+  @OneToMany(() => Payment, (payment) => payment.user)
+  @JoinColumn()
+  payments: Payment[];
+
+  @Column({ nullable: true, default: null })
+  packageId: number;
+
+  @Column({ type: 'bigint', nullable: true, default: null })
+  packageExpire: string;
+
   @Column({ type: 'enum', enum: EState, default: EState.Active })
   state: EState;
+
+  @Column({ type: 'bigint', nullable: true })
+  uav: number;
+
+  @Exclude({ toPlainOnly: true })
+  @Column({ nullable: true, default: null })
+  refreshToken: string;
 
   setPassword(password: string) {
     this.password = bcrypt.hashSync(password, 10);
   }
 
+  setRefreshToken(refreshToken: string) {
+    this.refreshToken = bcrypt.hashSync(refreshToken, 10);
+  }
+
   comparePassword(rawPassword: string): boolean {
     const userPassword = this.password;
     return bcrypt.compareSync(rawPassword, userPassword);
+  }
+
+  compareRefreshToken(rawRefreshToken: string): boolean {
+    const refreshToken = this.refreshToken;
+    return bcrypt.compareSync(rawRefreshToken, rawRefreshToken);
   }
 }
