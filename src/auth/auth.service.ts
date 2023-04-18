@@ -8,9 +8,11 @@ import { LoggerService } from '@base/logger';
 // APPS
 import { UserService } from '@/user/user.service';
 import { CheckPhoneDto, LoginDto, RegisterDto } from '@/auth/dtos/auth.dto';
-import { IJWTPayload } from '@/auth/interfaces/auth.interface';
+import { IJWTPayload, ITokens } from '@/auth/interfaces/auth.interface';
 import { DeviceService } from '@/manager-device/services/device.service';
 import { LoggedDeviceService } from '@/manager-device/services/logged-device.service';
+import { config } from '@/config';
+import { User } from '@/user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -34,10 +36,9 @@ export class AuthService {
 
     const payload: IJWTPayload = {
       sub: user.id,
-      // uav: new Date().getTime(),
+      uav: new Date().getTime(),
     };
-    const accessToken = this.jwtService.sign(payload);
-    const refreshToken = this.jwtService.sign(payload);
+    const tokens: ITokens = await this.getTokens(payload);
 
     const device = await this.deviceService.addDevice(dto.deviceInfo);
     try {
@@ -46,15 +47,14 @@ export class AuthService {
       throw new exc.BadException({
         message: e.message,
         errorCode: e.response.errorCode,
-        data: { ...user, accessToken: accessToken, refreshToken: refreshToken },
+        data: { ...user, accessToken: tokens.accessToken },
       });
     }
 
-    delete user.password;
+    await this.updateRefreshToken(user, tokens.refreshToken);
     return {
       ...user,
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      accessToken: tokens.accessToken,
     };
   }
 
@@ -69,5 +69,48 @@ export class AuthService {
 
   async checkPhoneExist(dto: CheckPhoneDto) {
     return this.userService.checkPhoneNumberExists(dto.phone);
+  }
+
+  async updateRefreshToken(user: User, refreshToken: string) {
+    // user.setRefreshToken(refreshToken);
+    user.refreshToken = refreshToken;
+    await this.userService.update(user);
+    return;
+  }
+
+  async refreshTokens(userId: number, refreshToken: string) {
+    console.log(refreshToken);
+    const user = await this.userService.getUserById(userId);
+    if (!user || !user.refreshToken)
+      throw new exc.Forbidden({ message: 'Access Denied' });
+
+    // const refreshTokenMatches = user.compareRefreshToken(refreshToken);
+    // if (!refreshTokenMatches)
+    //   throw new exc.Forbidden({ message: 'Access Denied' });
+
+    const tokens = await this.getTokens({ sub: userId });
+    await this.updateRefreshToken(user, tokens.refreshToken);
+    return tokens;
+  }
+
+  async getTokens(payload: IJWTPayload) {
+    console.log(payload, 'payload');
+    const accessToken = this.jwtService.sign(payload);
+    const refreshToken = this.jwtService.sign(payload, {
+      secret: config.JWT_RT_SECRET,
+      expiresIn: '7d',
+    });
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async logout(userId: number) {
+    const user = await this.userService.getUser(userId);
+    user.refreshToken = '';
+    user.uav = new Date().getTime();
+    await user.save();
   }
 }

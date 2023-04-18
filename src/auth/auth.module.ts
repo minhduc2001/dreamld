@@ -13,6 +13,7 @@ import { UserModule } from '@/user/user.module';
 // BASE
 import { config } from '@/config';
 import { ManagerDeviceModule } from '@/manager-device/manager-device.module';
+import { RtStrategy } from '@/auth/strategies/rt.strategy';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { ManagerDeviceModule } from '@/manager-device/manager-device.module';
   providers: [
     AuthService,
     JwtStrategy,
-    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    RtStrategy,
+    // { provide: APP_GUARD, useClass: JwtAuthGuard },
   ],
   controllers: [AuthController],
 })

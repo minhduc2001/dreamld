@@ -66,12 +66,28 @@ export class User extends AbstractEntity {
   @Column({ type: 'enum', enum: EState, default: EState.Active })
   state: EState;
 
+  @Column({ type: 'bigint', nullable: true })
+  uav: number;
+
+  @Exclude({ toPlainOnly: true })
+  @Column({ nullable: true, default: null })
+  refreshToken: string;
+
   setPassword(password: string) {
     this.password = bcrypt.hashSync(password, 10);
+  }
+
+  setRefreshToken(refreshToken: string) {
+    this.refreshToken = bcrypt.hashSync(refreshToken, 10);
   }
 
   comparePassword(rawPassword: string): boolean {
     const userPassword = this.password;
     return bcrypt.compareSync(rawPassword, userPassword);
+  }
+
+  compareRefreshToken(rawRefreshToken: string): boolean {
+    const refreshToken = this.refreshToken;
+    return bcrypt.compareSync(rawRefreshToken, rawRefreshToken);
   }
 }

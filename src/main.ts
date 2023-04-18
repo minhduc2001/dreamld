@@ -6,7 +6,7 @@ import {
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cookieParser from 'cookie-parser';
 
 import { ResponseTransformInterceptor } from '@base/middleware/response.interceptor';
 import { ValidationError } from '@base/api/exception.reslover';
@@ -25,6 +25,7 @@ async function bootstrap() {
 
   app.use(`/uploads`, express.static('uploads'));
   app.use(bodyParser.json({ limit: '10mb' }));
+  app.use(cookieParser());
   app.use(morgan('dev'));
 
   app.useGlobalInterceptors(new ResponseTransformInterceptor());
