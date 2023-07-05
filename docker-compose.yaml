@@ -1,55 +1,55 @@
 version: '3.8'
 
 services:
-#  dev:
-#    container_name: dreamld-dev
-#    image: dreamld-dev:1.0.0
-#    build:
-#      context: .
-#      target: development
-#      dockerfile: ./Dockerfile
-#    command: yarn start:dev
-#    ports:
-#      - ${PORT}:${PORT}
-#    networks:
-#      - nestjs-network
-#    volumes:
-#      - .:/usr/src/app
-#      - /usr/src/app/node_modules
-#    depends_on:
-#      - db
-#      - redis
-#    links:
-#      - db:db
-#      - redis:redis
-#    restart: unless-stopped
-#    env_file:
-#      - .env
+  #  dev:
+  #    container_name: dreamld-dev
+  #    image: dreamld-dev:1.0.0
+  #    build:
+  #      context: .
+  #      target: development
+  #      dockerfile: ./Dockerfile
+  #    command: yarn start:dev
+  #    ports:
+  #      - ${PORT}:${PORT}
+  #    networks:
+  #      - nestjs-network
+  #    volumes:
+  #      - .:/usr/src/app
+  #      - /usr/src/app/node_modules
+  #    depends_on:
+  #      - db
+  #      - redis
+  #    links:
+  #      - db:db
+  #      - redis:redis
+  #    restart: unless-stopped
+  #    env_file:
+  #      - .env
 
-  prod:
-    container_name: dreamld_prod
-    image: dreamld-prod:1.0.0
-    build:
-      context: .
-      target: production
-      dockerfile: ./Dockerfile
-    command: yarn start:prod
-    ports:
-      - ${PORT}:${PORT}
-    networks:
-      - nestjs-network
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    depends_on:
-      - db
-      - redis
-    links:
-      - db:db
-      - redis:redis
-    restart: unless-stopped
-    env_file:
-      - .env
+  # prod:
+  #   container_name: dreamld_prod
+  #   image: dreamld-prod:1.0.0
+  #   build:
+  #     context: .
+  #     target: production
+  #     dockerfile: ./Dockerfile
+  #   command: yarn start:prod
+  #   ports:
+  #     - ${PORT}:${PORT}
+  #   networks:
+  #     - nestjs-network
+  #   volumes:
+  #     - .:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   depends_on:
+  #     - db
+  #     - redis
+  #   links:
+  #     - db:db
+  #     - redis:redis
+  #   restart: unless-stopped
+  #   env_file:
+  #     - .env
   db:
     container_name: database
     image: postgres:13.6-alpine
@@ -60,13 +60,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
-#    command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
-    command: >
-      bash -c "
-        cp /etc/postgresql/postgresql.conf.sample /etc/postgresql/postgresql.conf &&
-        cp /etc/postgresql/pg_hba.conf.sample /etc/postgresql/pg_hba.conf &&
-        postgres -c 'config_file=/etc/postgresql/postgresql.conf'
-      "
+    command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
     ports:
       - ${DB_PORT}:5432
     networks:
@@ -92,6 +86,18 @@ services:
       - nestjs-network
     env_file:
       - .env
+  #   command: sh -c "chmod +x /usr/local/bin/entrypoint.sh && /usr/local/bin/entrypoint.sh"
+  #   volumes:
+  #     - ./docker/redis/entrypoint.sh:/usr/local/bin/entrypoint.sh
+  #   depends_on:
+  #     - redis-cli
+
+  # redis-cli:
+  #   image: redis:6.2.5-alpine
+  #   entrypoint: ['tail', '-f', '/dev/null']
+  #   networks:
+  #     - nestjs-network
 
 networks:
   nestjs-network:
+    driver: bridge
