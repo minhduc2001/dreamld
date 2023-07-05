@@ -1,104 +1,88 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Welcome to DreamLd!
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is a server component for a mobile application that helps babies sleep better.
+Question: Many parents find it difficult to put the baby to sleep. According to child psychologists reading fairy tales is one of the best ways to solve the problem. In fact, new parents often have for new books, and read them every night, because they have a lot of other things to do Of course, there are several apps on the App Store (or Play Market) with audio books, but they want something more than a regular audiobook library. Dreamtales is reimagination of audio fairy tales app for children and their parents. The main aim of the project is getting unigue experience for parents and children. In general, It should be a highly customized, simple to use by children, and beautiful app.
+Link design: [Dreamtales-app](https://www.behance.net/gallery/148878593/Dreamtales-app?tracking_source=search_projects%7CDreamtales)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Init project
+
+Clone branch develop: [https://github.com/minhduc2001/dreamld.git](https://github.com/minhduc2001/dreamld.git)
+Base on : [https://github.com/minhduc2001/nest-base](https://github.com/minhduc2001/nest-base)
+
+**Features**:
+
+- filter exception
+- log error to file, logger service
+- query data with postgresql
+- authentication, authorization, permission
+- upload file with multer
+- generic service
+- using swagger ui, docker, queue
+- payment momo, cancel overdue payment with redis
+
+**Technology used**:
+
+- NestJs
+- Typeorm
+- Postgres
+- Redis
+- Docker
+- Swagger
+- Husky(check format, type message pre push code)
+- Git/Github
+
+**Requirement**:
+
+- Node version >= 16
+- Docker
+- Recomment yarn
+
+**How to run**
+
+1.  _Install dependences, touch .env_
+    In root project:
+    > $ yarn
+    > or
+    > $ npm install
+
+> $ touch .env && cp .env.example .env
+
+2.  _Init environment using docker_
+
+Start docker (postgres, redis)
+
+> $ docker compose up -d
+> or
+> $ yarn docker:up
+
+Stop docker
+
+> $ docker compose down
+> or
+> $ yarn docker:down
+
+3.  _Run project_
+
+Run with develop
+
+> yarn start:dev
+
+Run with product
+
+> yarn start:prod
+
+Build
+
+> yarn build
+
+Check lint
+
+> yarn lint
+
+Check prettier
+
+> yarn prettier
+> or
+> yarn prettier:fix #if u need fix format code.
 
 ## Description
-
-Nest Base
-
-## Features
-
-## Technologies stack:
-
-- JWT
-- Bcrypt
-- TypeORM + Postgres
-- Docker
-
-## Installation
-
-### 1. Install the required dependencies
-
-```bash
-$ yarn
-```
-
-### 2. Rename the .env.example filename to .env and set your local variables
-
-```bash
-$ mv .env.example .env
-```
-
-### 3. Running the app
-
-```bash
-# development
-$ yarn start
-
-# watch mode
-$ yarn start:dev
-
-# production mode
-$ yarn start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ yarn test
-
-# e2e tests
-$ yarn test:e2e
-
-# test coverage
-$ yarn test:cov
-```
-
-## Docker for development
-
-```bash
-# start the application
-$ npm run docker:up
-
-# stop the application
-$ npm run docker:down
-```
-
-## Swagger documentation
-
-- [localhost:8080/api/v1/apidoc](http://localhost:8080/api/v1/apidoc)
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
